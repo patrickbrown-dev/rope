@@ -1,0 +1,47 @@
+* ~Data.Rope~
+
+A rope is a tree-like data structure that provides a more efficient
+way of concatenating strings. A valid rope must be either a node or
+a leaf. More specifically:
+
+- A rope leaf always contains some string (whether it be empty or
+  not).
+- A rope node contains no string, but references to it's left and
+  right child nodes. The total length of all it's children's is a
+  rope node's value.
+
+** Module Exports
+
+*** ~data Rope = Leaf String | Node Int Rope Rope~
+
+*** ~concat' :: Rope -> Rope -> Rope~
+
+Concatenates two Ropes. Time complexity: O(1).
+
+*** ~delete :: Rope -> Int -> Int -> Rope~
+
+Deletes substring in Rope for given range. Time complexity: O(log N).
+
+*** ~index :: Rope -> Int -> Char~
+
+Get Char from Rope at index. Time complexity: O(log N).
+
+*** ~insert :: Rope -> Int -> String -> Rope~
+
+Inserts String into Rope at index. Time complexity: O(log N).
+
+*** ~length' :: Rope -> Int~
+
+Gets length of Rope. Time complexity: O(1).
+
+*** ~split :: Rope -> Int -> (Rope, Rope)~
+
+Splits Rope at index into a Rope tuple. Time complexity: O(log N).
+
+*** ~substring :: Rope -> Int -> Int -> String~
+
+Gets substring for range in Rope. Time complexity: O(log N).
+
+*** ~toString :: Rope -> String~
+
+Casts Rope into String. Time complexity: O(N).
