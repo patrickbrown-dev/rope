@@ -1,10 +1,10 @@
-module RopeSpec (main, spec) where
+module Data.RopeSpec (main, spec) where
 
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
 
-import Rope
+import Data.Rope
 
 main :: IO ()
 main = hspec spec

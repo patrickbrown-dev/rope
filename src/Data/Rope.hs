@@ -9,7 +9,7 @@
 --     right child nodes. The total length of all it's children's is a
 --     rope node's value.
 
-module Rope
+module Data.Rope
      ( Rope(Leaf, Node)
      , concat'
      , delete
