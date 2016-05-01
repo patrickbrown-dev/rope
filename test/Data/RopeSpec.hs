@@ -75,6 +75,16 @@ spec = do
       toString r5 `shouldBe` "well, hello wicked world."
       length' r5 `shouldBe` length "well, hello wicked world."
 
+  describe "split" $ do
+    it "splits Rope at index for Leaf" $ do
+      let leaf = Leaf "hello"
+      split leaf 4 `shouldBe` (Leaf "hell", Leaf "o")
+    it "spits Rope at index for Node" $ do
+      let rope = Node 11 (Leaf "hello ") (Leaf "world")
+      let (r1, r2) = split rope 4
+      r1 `shouldBe` (Leaf "hell")
+      r2 `shouldBe` (Node 7 (Leaf "o ") (Leaf "world"))
+
   describe "substring" $ do
     it "gets string for range for Leaf" $ do
       let leaf = Leaf "hello"

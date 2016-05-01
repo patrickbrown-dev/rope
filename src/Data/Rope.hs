@@ -16,6 +16,7 @@ module Data.Rope
      , index
      , insert
      , length'
+     , split
      , substring
      , toString
      ) where
@@ -39,11 +40,10 @@ delete (Leaf string) i j = Node weight (Leaf s1) (Leaf s2)
         weight    = length (s1 ++ s2)
 delete (Node weight left right) i j
   | i > j                 = error "Cannot delete a negative range"
-  | i < llen && j < llen  = Node w (delete left i j) right
-  | i < llen && j >= llen = Node w (delete left i llen) (delete right 0 (j - llen))
-  | i >= llen             = Node w left (delete right (i - llen) (j - llen))
+  | i < llen && j < llen  = concat' (delete left i j) right
+  | i < llen && j >= llen = concat' (delete left i llen) (delete right 0 (j - llen))
+  | i >= llen             = concat' left (delete right (i - llen) (j - llen))
   where llen = length' left
-        w    = weight - (j - i)
 
 -- Get Char from Rope at index.
 -- Time complexity: O(log N)
@@ -61,18 +61,30 @@ insert (Leaf oldString) n newString = Node w1 (Node w2 (Leaf s1) (Leaf s2)) (Lea
         s2       = newString
         w1       = length (s1 ++ s2 ++ s3)
         w2       = length (s1 ++ s2)
-insert (Node weight left right) n string
-  | n < (length' left) = Node w1 (insert left n string) right
-  | n > (length' left) = Node w1 left (insert right (n - (length' left)) string)
-  | otherwise          = Node w1 left (Node w2 (Leaf string) right)
-  where w1 = weight + (length string)
-        w2 = (length' right) + (length string)
+insert (Node _ left right) n string
+  | n < llen  = concat' (insert left n string) right
+  | n > llen  = concat' left (insert right (n - llen) string)
+  | otherwise = concat' left (concat' (Leaf string) right)
+  where llen = length' left
 
 -- Gets length of Rope.
 -- Time complexity: O(1)
 length' :: Rope -> Int
 length' (Leaf string)     = length string
 length' (Node weight _ _) = weight
+
+-- Splits Rope at index into a Rope tuple.
+-- Time complexity: O(log N)
+split :: Rope -> Int -> (Rope, Rope)
+split (Leaf string) n = ((Leaf s1), (Leaf s2))
+  where (s1, s2) = splitAt n string
+split (Node weight left right) n
+  | n < llen  = (l1, concat' l2 right)
+  | n > llen  = (concat' left r1, r2)
+  | otherwise = (left, right)
+  where llen = length' left
+        (l1, l2) = split left n
+        (r1, r2) = split right n
 
 -- Gets substring for range in Rope.
 -- Time complexity: O(log N)
