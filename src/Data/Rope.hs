@@ -82,7 +82,7 @@ split (Node weight left right) n
   | n < llen  = (l1, concat' l2 right)
   | n > llen  = (concat' left r1, r2)
   | otherwise = (left, right)
-  where llen = length' left
+  where llen     = length' left
         (l1, l2) = split left n
         (r1, r2) = split right n
 
