@@ -1,3 +1,5 @@
+-- Copyright (C) 2016 by Patrick Arthur Brown <pab@hivemind.us.org>
+
 module Data.RopeSpec (main, spec) where
 
 import Test.Hspec

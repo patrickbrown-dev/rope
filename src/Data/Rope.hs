@@ -1,3 +1,5 @@
+-- Copyright (C) 2016 by Patrick Arthur Brown <pab@hivemind.us.org>
+--
 -- A rope is a tree-like data structure that provides a more efficient
 -- way of concatenating strings. A valid rope must be either a node or
 -- a leaf. More specifically:
