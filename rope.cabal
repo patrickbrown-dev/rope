@@ -2,7 +2,7 @@ name:                rope
 version:             0.1.0.0
 synopsis:            Implementation of the Rope data structure
 description:         https://en.wikipedia.org/wiki/Rope_(data_structure)
-homepage:            https://github.com/ptrckbrwn/rope
+homepage:            http://git.hivemind.us.org/?p=pab/rope.git
 license:             BSD3
 license-file:        LICENSE
 author:              Patrick Arthur Brown
@@ -32,4 +32,4 @@ test-suite rope-test
 
 source-repository head
   type:     git
-  location: https://github.com/ptrckbrwn/rope
+  location: http://git.hivemind.us.org/?p=pab/rope.git
