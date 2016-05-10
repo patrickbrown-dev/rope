@@ -40,7 +40,7 @@ delete (Leaf string) i j = Node weight (Leaf s1) (Leaf s2)
   where (s1, tmp) = splitAt i string
         (_, s2)   = splitAt (j - i) tmp
         weight    = length (s1 ++ s2)
-delete (Node weight left right) i j
+delete (Node _ left right) i j
   | i > j                 = error "Cannot delete a negative range"
   | i < llen && j < llen  = concat' (delete left i j) right
   | i < llen && j >= llen = concat' (delete left i llen) (delete right 0 (j - llen))
@@ -51,7 +51,7 @@ delete (Node weight left right) i j
 -- Time complexity: O(log N)
 index :: Rope -> Int -> Char
 index (Leaf string) n = string !! n
-index (Node weight left right) n
+index (Node _ left right) n
   | n < (length' left) = index left n
   | otherwise          = index right (n - (length' left))
 
@@ -80,7 +80,7 @@ length' (Node weight _ _) = weight
 split :: Rope -> Int -> (Rope, Rope)
 split (Leaf string) n = ((Leaf s1), (Leaf s2))
   where (s1, s2) = splitAt n string
-split (Node weight left right) n
+split (Node _ left right) n
   | n < llen  = (l1, concat' l2 right)
   | n > llen  = (concat' left r1, r2)
   | otherwise = (left, right)
