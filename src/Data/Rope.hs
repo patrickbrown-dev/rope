@@ -36,7 +36,9 @@ concat' r1 r2 = Node weight r1 r2
 -- Deletes substring in Rope for given range.
 -- Time complexity: O(log N)
 delete :: Rope -> Int -> Int -> Rope
-delete (Leaf string) i j = Node weight (Leaf s1) (Leaf s2)
+delete (Leaf string) i j
+  | i > j     = error "Cannot delete a negative range"
+  | otherwise = Node weight (Leaf s1) (Leaf s2)
   where (s1, tmp) = splitAt i string
         (_, s2)   = splitAt (j - i) tmp
         weight    = length (s1 ++ s2)
@@ -91,7 +93,9 @@ split (Node _ left right) n
 -- Gets substring for range in Rope.
 -- Time complexity: O(log N)
 substring :: Rope -> Int -> Int -> String
-substring (Leaf string) i j = s
+substring (Leaf string) i j
+  | i > j     = error "Cannot substring a negative range"
+  | otherwise = s
   where (_, tmp) = splitAt i string
         (s, _)   = splitAt (j - i) tmp
 substring (Node _ left right) i j

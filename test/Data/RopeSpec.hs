@@ -38,6 +38,8 @@ spec = do
     it "disallows negative ranges" $ do
       let rope = Node 11 (Leaf "hello ") (Leaf "world")
       evaluate (delete rope 5 4) `shouldThrow` errorCall "Cannot delete a negative range"
+      let leaf = Leaf "hello"
+      evaluate (delete leaf 3 2) `shouldThrow` errorCall "Cannot delete a negative range"
 
   describe "index" $ do
     it "returns the Char at index" $ do
@@ -97,6 +99,8 @@ spec = do
     it "disallows negative ranges" $ do
       let rope = Node 11 (Leaf "hello ") (Leaf "world")
       evaluate (substring rope 5 4) `shouldThrow` errorCall "Cannot substring a negative range"
+      let leaf = Leaf "hello"
+      evaluate (substring leaf 3 2) `shouldThrow` errorCall "Cannot substring a negative range"
 
   describe "toString" $ do
     it "returns the string value of Rope" $ do
